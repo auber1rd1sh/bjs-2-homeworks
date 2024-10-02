@@ -34,7 +34,7 @@ class Magazine extends PrintEditionItem {
 }
 
 class Book extends PrintEditionItem {
-	constructor(name, releaseDate, pagesCount, author) {
+	constructor(author, name, releaseDate, pagesCount) {
 		super(name, releaseDate, pagesCount);
 		this.type = "book";
 		this.author = author;
@@ -42,22 +42,22 @@ class Book extends PrintEditionItem {
 }
 
 class NovelBook extends Book {
-	constructor(name, releaseDate, pagesCount, author) {
-		super(name, releaseDate, pagesCount, author);
+	constructor(author, name, releaseDate, pagesCount) {
+		super(author, name, releaseDate, pagesCount);
 		this.type = "novel";
 	}
 }
 
 class FantasticBook extends Book {
-	constructor(name, releaseDate, pagesCount, author) {
-		super(name, releaseDate, pagesCount, author);
+	constructor(author, name, releaseDate, pagesCount) {
+		super(author, name, releaseDate, pagesCount);
 		this.type = "fantastic";
 	}
 }
 
 class DetectiveBook extends Book {
-	constructor(name, releaseDate, pagesCount, author) {
-		super(name, releaseDate, pagesCount, author);
+	constructor(author, name, releaseDate, pagesCount) {
+		super(author, name, releaseDate, pagesCount);
 		this.type = "detective";
 	}
 }
@@ -94,5 +94,54 @@ class Library {
 		return null;
 	}
 }
+
+
+class Student {
+	constructor(name) {
+		this.name = name;
+		this.marks = {};
+	}
+
+	addMarks(mark, subjectName) {
+		if (mark < 2 || mark > 5) {
+			return;
+		}
+
+		if (!this.marks[subjectName]) {
+			this.marks[subjectName] = [];
+		}
+
+		this.marks[subjectName].push(mark);
+	}
+
+	getAverageBySubject(subjectName) {
+		if (!this.marks[subjectName] || this.marks[subjectName].length === 0) {
+			return 0;
+		}
+
+		let sum = this.marks[subjectName].reduce((acc, mark) => acc + mark, 0);
+		return sum / this.marks[subjectName].length;
+	}
+
+	getAverage() {
+		const subjects = Object.keys(this.marks);
+
+		if (subjects.length === 0) {
+			return 0;
+		}
+
+		let totalSum = 0;
+		let totalMarks = 0;
+
+		subjects.forEach(subject => {
+			let subjectSum = this.marks[subject].reduce((acc, mark) => acc + mark, 0);
+			totalSum += subjectSum;
+			totalMarks += this.marks[subject].length;
+		});
+
+		return totalSum / totalMarks;
+	}
+}
+
 
 
